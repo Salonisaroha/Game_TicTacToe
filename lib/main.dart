@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       home: HomeScreen(),
-      debugShowCheckedModeBanner: false, // Remove debug banner
+      debugShowCheckedModeBanner: false,
     );
   }
 }
@@ -64,11 +64,22 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Tic Tac Toe'),
+        title: const Text(
+          'Tic Tac Toe',
+          style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
+        ),
         centerTitle: true,
-        backgroundColor: Colors.blueAccent,
+        flexibleSpace: Container(
+          decoration:const BoxDecoration(
+            gradient: LinearGradient(
+              colors: [Color.fromARGB(255, 2, 50, 134), Colors.blue],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            ),
+          ),
+        ),
         elevation: 10,
-        shape: RoundedRectangleBorder(
+        shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.vertical(
             bottom: Radius.circular(30),
           ),
@@ -80,28 +91,64 @@ class _HomeScreenState extends State<HomeScreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              TextField(
-                controller: _player1Controller,
-                decoration: InputDecoration(
-                  labelText: 'Player 1 Name',
-                  border: OutlineInputBorder(),
+              Material(
+                elevation: 5.0,
+                borderRadius: BorderRadius.circular(10.0),
+                child: TextField(
+                  controller: _player1Controller,
+                  decoration: InputDecoration(
+                    labelText: 'Player 1 Name',
+                    border:const OutlineInputBorder(),
+                    filled: true,
+                    fillColor: Colors.white,
+                    enabledBorder: OutlineInputBorder(
+                      borderSide:const BorderSide(color: Colors.blueAccent, width: 2.0),
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: const BorderSide(color: Colors.blue, width: 2.0),
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
+                  ),
+                  style: const TextStyle(fontSize: 18),
                 ),
               ),
-              SizedBox(height: 20),
-              TextField(
-                controller: _player2Controller,
-                decoration: InputDecoration(
-                  labelText: 'Player 2 Name',
-                  border: OutlineInputBorder(),
+              SizedBox(height: 30),
+              Material(
+                elevation: 5.0,
+                borderRadius: BorderRadius.circular(10.0),
+                child: TextField(
+                  controller: _player2Controller,
+                  decoration: InputDecoration(
+                    labelText: 'Player 2 Name',
+                    border:const OutlineInputBorder(),
+                    filled: true,
+                    fillColor: Colors.white,
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: const BorderSide(color: Colors.blueAccent, width: 2.0),
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: const BorderSide(color: Colors.blue, width: 2.0),
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
+                  ),
+                  style: const TextStyle(fontSize: 18),
                 ),
               ),
               SizedBox(height: 30),
               ElevatedButton(
                 onPressed: _startGame,
                 style: ElevatedButton.styleFrom(
-                  padding: EdgeInsets.symmetric(horizontal: 50, vertical: 15),
+                  foregroundColor: Colors.white,
+                  backgroundColor: Colors.blueAccent,
+                  padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 15),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  elevation: 5,
                 ),
-                child: Text(
+                child: const Text(
                   'Start Game',
                   style: TextStyle(fontSize: 18),
                 ),
@@ -149,9 +196,14 @@ class _GameScreenState extends State<GameScreen> {
 
   String _checkWinner() {
     const List<List<int>> winPatterns = [
-      [0, 1, 2], [3, 4, 5], [6, 7, 8], // Rows
-      [0, 3, 6], [1, 4, 7], [2, 5, 8], // Columns
-      [0, 4, 8], [2, 4, 6] // Diagonals
+      [0, 1, 2],
+      [3, 4, 5],
+      [6, 7, 8], // Rows
+      [0, 3, 6],
+      [1, 4, 7],
+      [2, 5, 8], // Columns
+      [0, 4, 8],
+      [2, 4, 6] // Diagonals
     ];
 
     for (var pattern in winPatterns) {
@@ -174,45 +226,80 @@ class _GameScreenState extends State<GameScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Tic Tac Toe'),
+        title: const Text(
+          'Tic Tac Toe',
+          style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
+        ),
         centerTitle: true,
-        backgroundColor: Colors.blueAccent,
+        flexibleSpace: Container(
+          decoration:const BoxDecoration(
+            gradient: LinearGradient(
+              colors: [const Color.fromARGB(255, 2, 92, 133), Colors.blue],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            ),
+          ),
+        ),
         elevation: 10,
-        shape: RoundedRectangleBorder(
+        shape:const RoundedRectangleBorder(
           borderRadius: BorderRadius.vertical(
             bottom: Radius.circular(30),
           ),
         ),
       ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Text(
-              '${widget.player1} (X) vs ${widget.player2} (O)',
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-              textAlign: TextAlign.center,
+      body: SingleChildScrollView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              child: Material(
+                elevation: 5.0,
+                borderRadius: BorderRadius.circular(10.0),
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Colors.blue[40],
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  margin: const EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    '${widget.player1} (X) vs ${widget.player2} (O)',
+                    style:const TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+              ),
             ),
-          ),
-          _buildBoard(),
-          SizedBox(height: 20),
-          Text(
-            _result,
-            style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.red),
-          ),
-          SizedBox(height: 20),
-          ElevatedButton(
-            onPressed: _resetGame,
-            style: ElevatedButton.styleFrom(
-              padding: EdgeInsets.symmetric(horizontal: 50, vertical: 15),
+            _buildBoard(),
+            SizedBox(height: 10), // Reduced the spacing
+            Text(
+              _result,
+              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.red),
             ),
-            child: Text(
-              'Reset Game',
-              style: TextStyle(fontSize: 18),
+            SizedBox(height: 10), // Reduced the spacing
+            Material(
+              elevation: 5.0,
+              borderRadius: BorderRadius.circular(10.0),
+              child: ElevatedButton(
+                onPressed: _resetGame,
+                style: ElevatedButton.styleFrom(
+                  foregroundColor: Colors.white,
+                  backgroundColor: Colors.lightBlue,
+                  padding: EdgeInsets.symmetric(horizontal: 30, vertical: 15),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  elevation: 5,
+                ),
+                child: Text(
+                  'Reset Game',
+                  style: TextStyle(fontSize: 18),
+                ),
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -223,10 +310,13 @@ class _GameScreenState extends State<GameScreen> {
       child: GridView.builder(
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 3,
+          mainAxisSpacing: 10,
+          crossAxisSpacing: 10,
         ),
         itemBuilder: _buildCell,
         itemCount: 9,
         shrinkWrap: true,
+        physics: NeverScrollableScrollPhysics(),
       ),
     );
   }
@@ -234,10 +324,23 @@ class _GameScreenState extends State<GameScreen> {
   Widget _buildCell(BuildContext context, int index) {
     return GestureDetector(
       onTap: () => _handleTap(index),
-      child: Container(
+      child: AnimatedContainer(
+        duration: Duration(milliseconds: 200),
         decoration: BoxDecoration(
-          color: Colors.blue[50],
-          border: Border.all(color: Colors.black),
+          gradient: LinearGradient(
+            colors: [Colors.lightBlueAccent, Colors.blueAccent],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+          ),
+          borderRadius: BorderRadius.circular(10),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black12,
+              blurRadius: 4,
+              spreadRadius: 1,
+              offset: Offset(2, 2),
+            ),
+          ],
         ),
         child: Center(
           child: Text(
@@ -245,7 +348,7 @@ class _GameScreenState extends State<GameScreen> {
             style: TextStyle(
               fontSize: 32,
               fontWeight: FontWeight.bold,
-              color: _board[index] == 'X' ? Colors.blue : Colors.red,
+              color: Colors.white,
             ),
           ),
         ),
@@ -253,3 +356,4 @@ class _GameScreenState extends State<GameScreen> {
     );
   }
 }
+
